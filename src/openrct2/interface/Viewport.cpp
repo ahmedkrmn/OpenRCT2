@@ -1662,6 +1662,14 @@ void get_map_coordinates_from_pos(
     get_map_coordinates_from_pos_window(window, screenX, screenY, flags, x, y, interactionType, tileElement, viewport);
 }
 
+void get_map_coordinates_from_pos(
+    std::pair<int32_t, int32_t> ScreenCoordsXY, int32_t flags, std::pair<int16_t*, int16_t*>& CoordsXY,
+    int32_t* interactionType, TileElement** tileElement, rct_viewport** viewport)
+{
+    rct_window* window = window_find_from_point(ScreenCoordsXY.first, ScreenCoordsXY.second);
+    get_map_coordinates_from_pos_window(window, ScreenCoordsXY, flags, CoordsXY, interactionType, tileElement, viewport);
+}
+
 void get_map_coordinates_from_pos_window(
     rct_window* window, int32_t screenX, int32_t screenY, int32_t flags, int16_t* x, int16_t* y, int32_t* interactionType,
     TileElement** tileElement, rct_viewport** viewport)
@@ -1708,6 +1716,15 @@ void get_map_coordinates_from_pos_window(
         *y = _interactionMapY;
     if (tileElement != nullptr)
         *tileElement = _interaction_element;
+}
+
+void get_map_coordinates_from_pos_window(
+    rct_window* window, std::pair<int32_t, int32_t> ScreenCoordsXY, int32_t flags, std::pair<int16_t*, int16_t*>& CoordsXY,
+    int32_t* interactionType, TileElement** tileElement, rct_viewport** viewport)
+{
+    get_map_coordinates_from_pos_window(
+        window, ScreenCoordsXY.first, ScreenCoordsXY.second, flags, CoordsXY.first, CoordsXY.second, interactionType,
+        tileElement, viewport);
 }
 
 /**
